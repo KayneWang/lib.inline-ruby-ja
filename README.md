@@ -4,7 +4,7 @@
 
 本仓库既包含：
 
-- **库本身**：构建后输出到 `dist/inline-ruby-ja.js`
+- **库本身**：构建后输出到 `dist/inline.ruby.ja.js`
 - **示例应用**：基于 Vite + Vue 3 的简单预览页面（`npm run dev`）
 
 ---
