@@ -1,9 +1,11 @@
 {
   "name": "@kaynewang/inline-ruby-ja",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "dist/inline.ruby.ja.js",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "types": "inline.ruby.ja.d.ts",
   "exports": {
     ".": {
