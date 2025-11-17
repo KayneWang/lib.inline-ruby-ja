@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { inlineToHtml } from "./inline.ruby.ja";
+import { inlineToHtml } from "./inline-ruby-ja";
 
 describe("inlineToHtml", () => {
   it("｜漢字《かんじ》", () => {

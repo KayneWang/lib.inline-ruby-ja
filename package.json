@@ -2,15 +2,15 @@
   "name": "@kaynewang/inline-ruby-ja",
   "version": "0.0.2",
   "type": "module",
-  "main": "dist/inline.ruby.ja.js",
+  "main": "dist/inline-ruby-ja.js",
   "files": [
     "dist"
   ],
-  "types": "inline.ruby.ja.d.ts",
+  "types": "inline-ruby-ja.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/inline.ruby.ja.js",
-      "require": "./dist/inline.ruby.ja.js"
+      "import": "./dist/inline-ruby-ja.js",
+      "require": "./dist/inline-ruby-ja.js"
     }
   },
   "publishConfig": {
