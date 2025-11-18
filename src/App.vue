@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import { inlineToHtml } from "./lib/inline-ruby-ja";
+import { inlineToHtml } from "./lib";
 
 const text = ref("これは｜漢字《かんじ》です\nこれは漢字《かんじ》です");
 

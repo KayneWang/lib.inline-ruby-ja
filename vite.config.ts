@@ -10,15 +10,20 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(__dirname, "src/lib/inline-ruby-ja.ts"),
+      entry: resolve(__dirname, "src/lib/index.ts"),
       formats: ["es"],
-      fileName: "inline-ruby-ja",
+      fileName: "index",
     },
   },
   plugins: [
     vue(),
     dts({
-      include: [resolve(__dirname, "src/lib/inline-ruby-ja.ts")],
+      include: [
+        resolve(__dirname, "src/lib/index.ts"),
+        resolve(__dirname, "src/lib/ast.to.html.ts"),
+        resolve(__dirname, "src/lib/common.ts"),
+        resolve(__dirname, "src/lib/inline.to.ast.ts"),
+      ],
       tsconfigPath: "./tsconfig.app.json",
     }),
   ],

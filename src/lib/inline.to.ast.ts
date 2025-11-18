@@ -1,31 +1,12 @@
-// 汉字 + 平假名 + 片假名 + 数字
-const RUBY_BASE_REGEX =
-  /([\p{Script=Han}0-9\uff10-\uff19][\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}0-9\uff10-\uff19]*)$/u;
-
-interface RunText {
-  t: "text";
-  text: string;
-}
-
-interface RunRubyWord {
-  t: "ruby";
-  rb: string;
-  rt: string;
-}
-
-type Run = RunText | RunRubyWord;
-
-interface RubyDoc {
-  lang: "ja";
-  paragraphs: Run[][];
-}
+import { RUBY_BASE_REGEX } from "./common";
+import type { Run, RubyDoc, RunText } from "./common";
 
 /**
  * 解析文本：将文本中的注音语法 `汉字《rt》` 转换为 AST
  *
  * 例："纳得《なっとく》" -> [{t: 'ruby', rb: '纳得', rt: 'なっとく'}]
  */
-function parseInlineRubyToParagraphs(input: string): RubyDoc {
+export function parseInlineRubyToAst(input: string): RubyDoc {
   const paragraphs = input
     .split(/\n{1,}/) // 按空行分段
     .map((s) => s.trim())
@@ -33,7 +14,7 @@ function parseInlineRubyToParagraphs(input: string): RubyDoc {
 
   const result: RubyDoc = {
     lang: "ja",
-    paragraphs: paragraphs.map(parseParagraph),
+    paragraphs: paragraphs.map(parseInlineRubyToRuns),
   };
 
   return result;
@@ -45,7 +26,7 @@ function parseInlineRubyToParagraphs(input: string): RubyDoc {
  * @param text - 段落文本
  * @returns 段落 AST
  */
-function parseParagraph(text: string): Run[] {
+export function parseInlineRubyToRuns(text: string): Run[] {
   const runs: Run[] = [];
   let position = 0;
 
@@ -138,27 +119,4 @@ function parseParagraph(text: string): Run[] {
   }
 
   return runs;
-}
-
-// ===== 段落 AST → HTML =====
-function runToHtml(r: Run): string {
-  const esc = (s: string) =>
-    s.replace(
-      /[&<>"]/g,
-      (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c] || c)
-    );
-
-  if (r.t === "text") return esc(r.text);
-  return `<ruby>${esc(r.rb)}<rt>${esc(r.rt)}</rt></ruby>`;
-}
-
-function docToHtml(doc: RubyDoc): string {
-  return doc.paragraphs
-    .map((runs) => runs.map(runToHtml).join(""))
-    .join("<br/>"); // 段落间空行
-}
-
-export function inlineToHtml(text: string): string {
-  const doc = parseInlineRubyToParagraphs(text);
-  return docToHtml(doc);
 }

@@ -1,5 +1,28 @@
 import { describe, it, expect } from "vitest";
-import { inlineToHtml } from "./inline-ruby-ja";
+import { inlineToHtml, parseInlineRubyToAst } from ".";
+
+describe("parseInlineRubyToAst", () => {
+  it("｜漢字《かんじ》\nひらがな", () => {
+    expect(parseInlineRubyToAst("｜漢字《かんじ》\nひらがな")).toEqual({
+      lang: "ja",
+      paragraphs: [
+        [
+          {
+            t: "ruby",
+            rb: "漢字",
+            rt: "かんじ",
+          },
+        ],
+        [
+          {
+            t: "text",
+            text: "ひらがな",
+          },
+        ],
+      ],
+    });
+  });
+});
 
 describe("inlineToHtml", () => {
   it("｜漢字《かんじ》", () => {
