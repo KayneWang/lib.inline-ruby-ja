@@ -29,6 +29,7 @@ export function docToHtml(doc: RubyDoc, options?: DocToHtmlOptions): string {
  * 将文本转换为 HTML
  */
 export function inlineToHtml(text: string, options?: DocToHtmlOptions): string {
+  if (!text) return "";
   const doc = parseInlineRubyToAst(text);
   return docToHtml(doc, options);
 }

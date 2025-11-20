@@ -90,8 +90,15 @@ export function parseInlineRubyToRuns(text: string): Run[] {
 
     if (!rubyBaseInfo) {
       // 没有找到 CJK 字符，说明 `《...》` 不是注音语法，当作普通文本
-      const lastRun = runs[runs.length - 1] as RunText;
-      lastRun.text += text.slice(openBrace, closeBrace + 1);
+      const lastRun = runs[runs.length - 1];
+      const chunk = text.slice(openBrace, closeBrace + 1);
+
+      if (lastRun && lastRun.t === "text") {
+        lastRun.text += chunk;
+      } else {
+        addText(chunk);
+      }
+
       position = closeBrace + 1;
       continue;
     }

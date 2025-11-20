@@ -76,4 +76,13 @@ describe("inlineToHtml", () => {
       "<ruby>漢字<rt>かんじ</rt></ruby><br/><ruby>漢字<rt>かんじ</rt></ruby>"
     );
   });
+
+  it("undefined input", () => {
+    // @ts-ignore
+    expect(inlineToHtml(undefined)).toBe("");
+  });
+
+  it("invalid ruby markup", () => {
+    expect(inlineToHtml("《invalid》")).toBe("《invalid》");
+  });
 });
